@@ -8,8 +8,18 @@ const SUPERNOTES_CARDS_SPECIFY_URL =
 
 const SUPERNOTES_CARDS_UPDATE_URL = "https://api.supernotes.app/v1/cards/";
 
+const BLOG_ARTICLES_CARD_ID = "ea01500d-d244-44d8-9e85-ead7ecc53315";
+
+const TAG_TO_PUBLISH = "publish";
+
 type Card = {
-  data: { id: string; name: string; html: string; tags: string[] };
+  data: {
+    id: string;
+    name: string;
+    html: string;
+    tags: string[];
+    targeted_when: string;
+  };
 };
 
 type CardCollection = { string: Card };
@@ -28,10 +38,10 @@ const getCardsByIds = async (ids: string[]): Promise<CardCollection> => {
   };
 
   const res = await fetch(SUPERNOTES_CARDS_SPECIFY_URL, options);
-  console.log(res);
+  //   console.log(res);
 
   const json = await res.json();
-  console.log(json);
+  //   console.log(json);
 
   return json;
 };
@@ -45,33 +55,25 @@ const getAllBlogCardsToPublish = async (): Promise<CardCollection> => {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      "filter_group": {
-        "operator": "and",
-        "filters": [
+      parent_card_id: BLOG_ARTICLES_CARD_ID,
+      filter_group: {
+        operator: "and",
+        filters: [
           {
-            "type": "tag",
-            "operator": "contains",
-            "arg": "blog",
-          },
-          {
-            "type": "tag",
-            "operator": "contains",
-            "arg": "publish",
+            type: "tag",
+            operator: "contains",
+            arg: TAG_TO_PUBLISH,
           },
         ],
-      },
-      "sort": {
-        "type": 1,
-        "ascending": true,
       },
     }),
   };
 
   const res = await fetch(SUPERNOTES_CARDS_SELECT_URL, options);
-  console.log(res);
+  //   console.log(res);
 
   const json = await res.json();
-  console.log(json);
+  //   console.log(json);
 
   return json;
 };
@@ -90,10 +92,10 @@ const getAllChildCards = async (id: string): Promise<CardCollection> => {
   };
 
   const res = await fetch(SUPERNOTES_CARDS_SELECT_URL, options);
-  console.log(res);
+  //   console.log(res);
 
   const json = await res.json();
-  console.log(json);
+  //   console.log(json);
 
   return json;
 };
@@ -120,10 +122,10 @@ const tagCardAsPublished = async ({ data: { id, tags } }: Card) => {
     `${SUPERNOTES_CARDS_UPDATE_URL}${id}/`,
     options,
   );
-  console.log(res);
+  //   console.log(res);
 
   const json = await res.json();
-  console.log(json);
+  //   console.log(json);
 
   return json;
 };

@@ -1,3 +1,4 @@
+import { articleSkeleton } from "./articles.ts";
 import {
   Card,
   getAllBlogCardsToPublish,
@@ -10,7 +11,13 @@ const buildBlogArticleFromCard = async (
   { data: { id, name, html } }: Card,
   level = 1,
 ) => {
-  const children = await getAllChildCards(id);
+  const children = Object.values(await getAllChildCards(id));
+
+  children.sort((cardA, cardB) =>
+    cardA.data.targeted_when < cardB.data.targeted_when ? -1 : 1
+  );
+
+  console.log(children);
 
   let childrenHtml = "";
 
@@ -22,38 +29,44 @@ const buildBlogArticleFromCard = async (
   return `
     <h${level}>${name}</h${level}>
     ${html}
-    ${childrenHtml}
+    ${childrenHtml.trim()}
   `;
 };
 
 // getAllChildCards("49f035c6-a518-40c1-acab-e5087f0c228f");
 
 const publishBlogArticles = async () => {
-  const publishedBlogCards = await getAllBlogCardsToPublish();
+  const blogCardsToPublish = await getAllBlogCardsToPublish();
 
-  console.log(publishedBlogCards);
+  console.log(blogCardsToPublish);
 
   const blogArticles = [];
 
-  for (const publishedBlogCard of Object.values(publishedBlogCards)) {
-    const articleHtml = await buildBlogArticleFromCard(publishedBlogCard);
+  for (const blogCardToPublish of Object.values(blogCardsToPublish)) {
+    const { id, name } = blogCardToPublish.data;
 
-    console.log(articleHtml);
+    const articleHtml = await buildBlogArticleFromCard(blogCardToPublish);
 
-    blogArticles.push(articleHtml);
+    const article = articleSkeleton(name, articleHtml).trim();
+
+    console.log(article);
+
+    blogArticles.push(article);
+
+    await Deno.writeTextFile(`./articles/${id}.html`, article);
   }
 };
 
 // DO SOMETHING
 
-// const articles = await publishBlogArticles();
+const articles = await publishBlogArticles();
 
-const cards = await getCardsByIds(["5fd5b354-5d88-4296-9b71-99dbee4122fb"]);
+// const cards = await getCardsByIds(["5fd5b354-5d88-4296-9b71-99dbee4122fb"]);
 
-const [card, ..._rest] = Object.values(cards);
+// const [card, ..._rest] = Object.values(cards);
 
-console.log(cards);
+// console.log(cards);
 
-tagCardAsPublished(card);
+// tagCardAsPublished(card);
 
-// console.log(articles);
+console.log(articles);
