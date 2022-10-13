@@ -25,5 +25,6 @@ jobs:
         run: |
           git config --global user.name "SilvanCodes"
           git config --global user.email "hello@silvan.codes"
-          git commit -am "Update generated files"
+          git add -A
+          git commit -m "Update generated files"
           git push
