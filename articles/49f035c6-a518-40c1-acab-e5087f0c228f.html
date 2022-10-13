@@ -69,14 +69,6 @@
         font-size: var(--s1);
     }
 
-    i {
-        font-size: var(--s1);
-    }
-
-    .unlimited {
-        max-inline-size: none;
-    }
-
     header a {
         color: inherit;
         text-decoration: none;
@@ -88,22 +80,18 @@
 </style>
 
 
-    <body class="elc-cover">
+    <body class="elc-cover elc-center">
 
-    <header>
-        <div class="elc-center">
-            <a href="/index.html">
-                <h1>SilvanBlogs</h1>
-            </a>
-        </div>
+        <main class="elc-stack">
+
+    <header class="elc-center">
+        <a href="/index.html">
+            <h1>SilvanBlogs</h1>
+        </a>
     </header>
 
-
-        <main >
-            <hr class="unlimited" />
-
-            <div class="elc-center">
-                <div class="elc-stack">
+        <hr />
+        <article class="elc-stack">
     <section>
       <h1>Blogging from Supernotes</h1>
 <p>I want to create and edit blog posts simply from within <a href="https://supernotes.app" class="external-link" target="_blank" rel="noreferrer noopener">Supernotes</a>. And soon I can! (When you are reading this I definitely can.)</p>
@@ -118,16 +106,34 @@
 <p>Having it in Supernotes reduces mental load and friction a ton. I can start writing blog posts where I note down everything. It’s easy to refine thoughts into posts and I could publish any thought should I feel like it.</p>
 
     </section>
-</div>
-            </div>
+</article>
+        <hr />
 
-            <hr class="unlimited" />
+    <footer>
+        <section>
+            <p>
+                <a href="https://github.com/SilvanCodes" target="_blank" rel="noreferrer" tabindex="0">
+                    My Github
+                </a>
+                <br />
+                <a href="https://silvan.codes" target="_blank" rel="noreferrer" tabindex="0">
+                    My Website
+                </a>
+                <br />
+                Email me at:
+                <a href="mailto:hello@silvan.codes" tabindex="0">
+                    hello@silvan.codes
+                </a>
+                <br />
+                Buy me a coffee at:
+                <a href="https://www.buymeacoffee.com/silvancodes" target="_blank" rel="noreferrer" tabindex="0">
+                    BuyMeACoffee
+                </a>
+            </p>
+        </section>
+    </footer>
 
         </main>
-
-
-    <footer class="elc-center">
-    </footer>
 
     </body>
 </html>

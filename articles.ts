@@ -9,21 +9,16 @@ ${headSkeleton()}
 
 ${style()}
 
-    <body class="elc-cover">
+    <body class="elc-cover elc-center">
+
+        <main class="elc-stack">
 ${header()}
-
-        <main >
-            <hr class="unlimited" />
-
-            <div class="elc-center">
-                <div class="elc-stack">${html}</div>
-            </div>
-
-            <hr class="unlimited" />
-
+        <hr />
+        <article class="elc-stack">${html}</article>
+        <hr />
+${footer()}
         </main>
 
-${footer()}
     </body>
 </html>`;
 
@@ -68,17 +63,36 @@ const headSkeleton = () => `
 `;
 
 const header = () => `
-    <header>
-        <div class="elc-center">
-            <a href="/index.html">
-                <h1>SilvanBlogs</h1>
-            </a>
-        </div>
+    <header class="elc-center">
+        <a href="/index.html">
+            <h1>SilvanBlogs</h1>
+        </a>
     </header>
 `;
 
 const footer = () => `
-    <footer class="elc-center">
+    <footer>
+        <section>
+            <p>
+                <a href="https://github.com/SilvanCodes" target="_blank" rel="noreferrer" tabindex="0">
+                    My Github
+                </a>
+                <br />
+                <a href="https://silvan.codes" target="_blank" rel="noreferrer" tabindex="0">
+                    My Website
+                </a>
+                <br />
+                Email me at:
+                <a href="mailto:hello@silvan.codes" tabindex="0">
+                    hello@silvan.codes
+                </a>
+                <br />
+                Buy me a coffee at:
+                <a href="https://www.buymeacoffee.com/silvancodes" target="_blank" rel="noreferrer" tabindex="0">
+                    BuyMeACoffee
+                </a>
+            </p>
+        </section>
     </footer>
 `;
 
@@ -105,14 +119,6 @@ const style = () => `
 
     h1 {
         font-size: var(--s1);
-    }
-
-    i {
-        font-size: var(--s1);
-    }
-
-    .unlimited {
-        max-inline-size: none;
     }
 
     header a {

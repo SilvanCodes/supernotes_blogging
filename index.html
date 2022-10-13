@@ -70,14 +70,6 @@
         font-size: var(--s1);
     }
 
-    i {
-        font-size: var(--s1);
-    }
-
-    .unlimited {
-        max-inline-size: none;
-    }
-
     header a {
         color: inherit;
         text-decoration: none;
@@ -89,22 +81,18 @@
 </style>
 
 
-    <body class="elc-cover">
+    <body class="elc-cover elc-center">
 
-    <header>
-        <div class="elc-center">
-            <a href="/index.html">
-                <h1>SilvanBlogs</h1>
-            </a>
-        </div>
+        <main class="elc-stack">
+
+    <header class="elc-center">
+        <a href="/index.html">
+            <h1>SilvanBlogs</h1>
+        </a>
     </header>
 
-
-        <main >
-            <hr class="unlimited" />
-
-            <div class="elc-center">
-                <div class="elc-stack">
+        <hr />
+        <article class="elc-stack">
     <section>
       <a href=./articles/49f035c6-a518-40c1-acab-e5087f0c228f.html>
         <h2>Blogging from Supernotes</h2>
@@ -112,16 +100,34 @@
         <p>Updated at: Thu Oct 13 2022</p>
       </a>
     </section>
-    </div>
-            </div>
+    </article>
+        <hr />
 
-            <hr class="unlimited" />
+    <footer>
+        <section>
+            <p>
+                <a href="https://github.com/SilvanCodes" target="_blank" rel="noreferrer" tabindex="0">
+                    My Github
+                </a>
+                <br />
+                <a href="https://silvan.codes" target="_blank" rel="noreferrer" tabindex="0">
+                    My Website
+                </a>
+                <br />
+                Email me at:
+                <a href="mailto:hello@silvan.codes" tabindex="0">
+                    hello@silvan.codes
+                </a>
+                <br />
+                Buy me a coffee at:
+                <a href="https://www.buymeacoffee.com/silvancodes" target="_blank" rel="noreferrer" tabindex="0">
+                    BuyMeACoffee
+                </a>
+            </p>
+        </section>
+    </footer>
 
         </main>
-
-
-    <footer class="elc-center">
-    </footer>
 
     </body>
 </html>
