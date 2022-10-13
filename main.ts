@@ -3,21 +3,27 @@ import {
   Card,
   getAllBlogCardsToPublish,
   getAllChildCards,
-  getCardsByIds,
-  tagCardAsPublished,
+  tagCardsAsPublished,
 } from "./cards.ts";
 
 const buildBlogArticleFromCard = async (
   { data: { id, name, html } }: Card,
   level = 1,
 ) => {
+  const sectionizedHtml = html.replaceAll(
+    "<h",
+    `
+  </section>
+  <section><h`,
+  );
+
   const children = Object.values(await getAllChildCards(id));
 
   children.sort((cardA, cardB) =>
     cardA.data.targeted_when < cardB.data.targeted_when ? -1 : 1
   );
 
-  console.log(children);
+  // console.log(children);
 
   let childrenHtml = "";
 
@@ -28,14 +34,12 @@ const buildBlogArticleFromCard = async (
 
   return `
     <section>
-    <h${level}>${name}</h${level}>
-    ${html}
+      <h${level}>${name}</h${level}>
+      ${sectionizedHtml}
     </section>
     ${childrenHtml.trim()}
   `;
 };
-
-// getAllChildCards("49f035c6-a518-40c1-acab-e5087f0c228f");
 
 const buildIndexHtml = async (
   articleMeta: {
@@ -65,22 +69,33 @@ const buildIndexHtml = async (
 };
 
 const publishBlogArticles = async () => {
+  console.log("Getting all cards to publish...");
+
   const blogCardsToPublish = await getAllBlogCardsToPublish();
 
-  console.log(blogCardsToPublish);
+  console.log(
+    `Got ${Object.keys(blogCardsToPublish).length} cards to publish.`,
+  );
 
   const blogArticles = [];
 
   const blogArticleLinks = [];
 
-  for (const blogCardToPublish of Object.values(blogCardsToPublish)) {
+  const sortedBlogCards = Object.values(blogCardsToPublish).sort((
+    cardA,
+    cardB,
+  ) => cardA.data.created_when > cardB.data.created_when ? -1 : 1);
+
+  for (const blogCardToPublish of sortedBlogCards) {
     const { id, name, created_when, modified_when } = blogCardToPublish.data;
+
+    console.log(`Building article ${name} with id ${id}...`);
 
     const articleHtml = await buildBlogArticleFromCard(blogCardToPublish);
 
     const article = articleSkeleton(name, articleHtml).trim();
 
-    console.log(article);
+    // console.log(article);
 
     blogArticles.push(article);
 
@@ -89,14 +104,28 @@ const publishBlogArticles = async () => {
     blogArticleLinks.push({ articleUrl, name, created_when, modified_when });
 
     await Deno.writeTextFile(articleUrl, article);
+
+    console.log(`Sucessfully build article ${name} with id ${id}.`);
   }
 
+  console.log(`Building index.html...`);
+
   await buildIndexHtml(blogArticleLinks);
+
+  console.log(`Sucessfully build index.html.`);
+
+  console.log(`Tagging cards as published...`);
+
+  await tagCardsAsPublished(blogCardsToPublish);
+
+  console.log(`Sucessfully tagged cards as published.`);
 };
 
 // DO SOMETHING
 
-const articles = await publishBlogArticles();
+console.log("Starting article generation...");
+
+await publishBlogArticles();
 
 // const cards = await getCardsByIds(["5fd5b354-5d88-4296-9b71-99dbee4122fb"]);
 
@@ -106,4 +135,4 @@ const articles = await publishBlogArticles();
 
 // tagCardAsPublished(card);
 
-console.log(articles);
+console.log("Successfully generated articles!");

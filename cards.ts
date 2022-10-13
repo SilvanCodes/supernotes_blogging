@@ -102,6 +102,12 @@ const getAllChildCards = async (id: string): Promise<CardCollection> => {
   return json;
 };
 
+const tagCardsAsPublished = async (cards: CardCollection) => {
+  for (const card of Object.values(cards)) {
+    await tagCardAsPublished(card);
+  }
+};
+
 const tagCardAsPublished = async ({ data: { id, tags } }: Card) => {
   tags = tags.filter((tag) => tag !== "publish");
   tags.push("published");
@@ -139,4 +145,5 @@ export {
   getAllChildCards,
   getCardsByIds,
   tagCardAsPublished,
+  tagCardsAsPublished,
 };

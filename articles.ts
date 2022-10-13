@@ -41,9 +41,11 @@ ${style()}
     <hr class="unlimited" />
 
     <main class="elc-center">
+        <div class="elc-stack">
         <!-- ARTICLE INDEX START-->
         ${html}
         <!-- ARTICLE INDEX END-->
+        </div>
     </main>
 
 </body>
@@ -141,7 +143,7 @@ const style = () => `
         margin: var(--s0) var(--s0);
     }
 
-    a {
+    header a {
         color: inherit;
         text-decoration: none;
     }
