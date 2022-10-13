@@ -1,0 +1,32 @@
+name: Supernotes Article Publisher
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "37 4 * * *" # “At 04:37.”, see: https://crontab.guru/#37_4_*_*_*
+
+jobs:
+  Publish-Articles:
+    runs-on: ubuntu-latest
+    container:
+      image: denoland/deno:1.10.3
+      env:
+        SUPERNOTES_API_KEY: ${{ secrets.SUPERNOTES_API_KEY }}
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Delete index and articles
+        run: |
+          rm index.html
+          rm rm articles/*
+
+      - name: Regenerate index and articles
+        run: deno run --allow-env --allow-net --allow-write main.ts
+
+      - name: Commit generated files
+        run: |
+          git config --global user.name "SilvanCodes"
+          git config --global user.email "hello@silvan.codes"
+          git commit -am "Update generated files"
+          git push
