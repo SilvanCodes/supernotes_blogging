@@ -19,7 +19,7 @@ jobs:
       - name: Delete index and articles
         run: |
           rm index.html
-          rm rm articles/*
+          rm articles/*
 
       - name: Regenerate index and articles
         run: deno run --allow-env --allow-net --allow-write main.ts
