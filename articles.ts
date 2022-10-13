@@ -4,54 +4,28 @@ const articleSkeleton = (title: string, html: string) => `
 <html lang="en">
     <head>
         <title>${title}</title>
-        ${headSkeleton()}
+${headSkeleton()}
     </head>
-
-    ${style()}
-
-    <body class="elc-cover">
-        ${header()}
-        
-        <hr class="unlimited" />
-
-        <main class="elc-center">
-            <div>
-                ${html}
-            </div>
-        </main>
-    </body>
-</html>
-  `;
-
-const indexSkeleton = (html: string) => `
-<!DOCTYPE html>
-
-<html lang="en">
-
-<head>
-    <title>SilvanBlogs</title>
-    ${headSkeleton()}
-</head>
 
 ${style()}
 
-<body class="elc-cover">
-    ${header()}
+    <body class="elc-cover">
+${header()}
 
-    <hr class="unlimited" />
+        <main >
+            <hr class="unlimited" />
 
-    <main class="elc-center">
-        <div class="elc-stack">
-        <!-- ARTICLE INDEX START-->
-        ${html}
-        <!-- ARTICLE INDEX END-->
-        </div>
-    </main>
+            <div class="elc-center">
+                <div class="elc-stack">${html}</div>
+            </div>
 
-</body>
+            <hr class="unlimited" />
 
-</html>
-`;
+        </main>
+
+${footer()}
+    </body>
+</html>`;
 
 const headSkeleton = () => `
     <meta charset="UTF-8" />
@@ -94,17 +68,18 @@ const headSkeleton = () => `
 `;
 
 const header = () => `
-    <header class="elc-cluster">
-        <a href="/index.html">
-            <i class="mi-home elc-icon"></i>
-        </a>
-        <a href="/index.html">
-            <h1>SilvanBlogs</h1>
-        </a>
-        <a href="/index.html">
-            <i class="mi-menu elc-icon"></i>
-        </a>
+    <header>
+        <div class="elc-center">
+            <a href="/index.html">
+                <h1>SilvanBlogs</h1>
+            </a>
+        </div>
     </header>
+`;
+
+const footer = () => `
+    <footer class="elc-center">
+    </footer>
 `;
 
 const style = () => `
@@ -115,6 +90,7 @@ const style = () => `
 
     .elc-cover {
         --cover-min-block-size: auto;
+        --cover-padding: var(--s1);
     }
 
     .elc-cluster {
@@ -139,15 +115,15 @@ const style = () => `
         max-inline-size: none;
     }
 
-    header {
-        margin: var(--s0) var(--s0);
-    }
-
     header a {
         color: inherit;
         text-decoration: none;
     }
+
+    section {
+        padding: var(--s0);
+    }
 </style>
 `;
 
-export { articleSkeleton, indexSkeleton };
+export { articleSkeleton };

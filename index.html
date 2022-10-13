@@ -2,10 +2,9 @@
 <!DOCTYPE html>
 
 <html lang="en">
+    <head>
+        <title>SilvanBlogs</title>
 
-<head>
-    <title>SilvanBlogs</title>
-    
     <meta charset="UTF-8" />
     <meta name="description" content="Read Silvan's blog" />
     <meta name="keywords" content="Silvan, Developer, Programmer, Computer Scientist" />
@@ -44,7 +43,7 @@
 
     <link href="https://unpkg.com/mono-icons@1.3.1/iconfont/icons.css" rel="stylesheet">
 
-</head>
+    </head>
 
 
 <style>
@@ -54,6 +53,7 @@
 
     .elc-cover {
         --cover-min-block-size: auto;
+        --cover-padding: var(--s1);
     }
 
     .elc-cluster {
@@ -78,54 +78,33 @@
         max-inline-size: none;
     }
 
-    header {
-        margin: var(--s0) var(--s0);
-    }
-
     header a {
         color: inherit;
         text-decoration: none;
     }
+
+    section {
+        padding: var(--s0);
+    }
 </style>
 
 
-<body class="elc-cover">
-    
-    <header class="elc-cluster">
-        <a href="/index.html">
-            <i class="mi-home elc-icon"></i>
-        </a>
-        <a href="/index.html">
-            <h1>SilvanBlogs</h1>
-        </a>
-        <a href="/index.html">
-            <i class="mi-menu elc-icon"></i>
-        </a>
+    <body class="elc-cover">
+
+    <header>
+        <div class="elc-center">
+            <a href="/index.html">
+                <h1>SilvanBlogs</h1>
+            </a>
+        </div>
     </header>
 
 
-    <hr class="unlimited" />
+        <main >
+            <hr class="unlimited" />
 
-    <main class="elc-center">
-        <div class="elc-stack">
-        <!-- ARTICLE INDEX START-->
-        
-    <section>
-      <a href=./articles/c9660fda-effc-4d3a-92ce-3612ad917fc4.html>
-        <h2>Frech article up top</h2>
-        <p>Created at: Thu Oct 13 2022</p>
-        <p>Updated at: Thu Oct 13 2022</p>
-      </a>
-    </section>
-    
-    <section>
-      <a href=./articles/7f2026a2-6cf8-4bbe-a21b-0c5aa24eb2ae.html>
-        <h2>The next big thing</h2>
-        <p>Created at: Sun Oct 02 2022</p>
-        <p>Updated at: Thu Oct 13 2022</p>
-      </a>
-    </section>
-    
+            <div class="elc-center">
+                <div class="elc-stack">
     <section>
       <a href=./articles/49f035c6-a518-40c1-acab-e5087f0c228f.html>
         <h2>Blogging from Supernotes</h2>
@@ -133,19 +112,16 @@
         <p>Updated at: Thu Oct 13 2022</p>
       </a>
     </section>
-    
-    <section>
-      <a href=./articles/49f035c6-a518-40c1-acab-e5087f0c228f.html>
-        <h2>Blogging from Supernotes</h2>
-        <p>Created at: Sun Oct 02 2022</p>
-        <p>Updated at: Thu Oct 13 2022</p>
-      </a>
-    </section>
-    
-        <!-- ARTICLE INDEX END-->
-        </div>
-    </main>
+    </div>
+            </div>
 
-</body>
+            <hr class="unlimited" />
 
+        </main>
+
+
+    <footer class="elc-center">
+    </footer>
+
+    </body>
 </html>

@@ -1,4 +1,4 @@
-import { articleSkeleton, indexSkeleton } from "./articles.ts";
+import { articleSkeleton } from "./articles.ts";
 import {
   Card,
   getAllBlogCardsToPublish,
@@ -36,19 +36,20 @@ const buildBlogArticleFromCard = async (
   return `
     <section>
       <h${level}>${name}</h${level}>
-      ${sectionizedHtml}
+${sectionizedHtml}
     </section>
-    ${childrenHtml.trim()}
-  `;
+${childrenHtml.trim()}`;
+};
+
+type ArticleMeta = {
+  articleUrl: string;
+  name: string;
+  created_when: string;
+  modified_when: string;
 };
 
 const buildIndexHtml = async (
-  articleMeta: {
-    articleUrl: string;
-    name: string;
-    created_when: string;
-    modified_when: string;
-  }[],
+  articleMeta: ArticleMeta[],
 ) => {
   let indexEntries = "";
 
@@ -64,7 +65,7 @@ const buildIndexHtml = async (
     `;
   }
 
-  const indexHtml = indexSkeleton(indexEntries);
+  const indexHtml = articleSkeleton("SilvanBlogs", indexEntries);
 
   await Deno.writeTextFile("index.html", indexHtml);
 };
@@ -112,20 +113,31 @@ const publishBlogArticles = async () => {
     blogArticleLinks.push({ articleUrl, name, created_when, modified_when });
   }
 
-  blogArticleLinks.sort((
+  const uniqueBlogArticleLinks = Object.values(blogArticleLinks.reduce(
+    (
+      acc: Record<string, ArticleMeta>,
+      val,
+    ) => {
+      acc[val.articleUrl] = val;
+      return acc;
+    },
+    {},
+  ));
+
+  uniqueBlogArticleLinks.sort((
     cardA,
     cardB,
   ) => cardA.created_when > cardB.created_when ? -1 : 1);
 
   console.log(`Building index.html...`);
 
-  await buildIndexHtml(blogArticleLinks);
+  await buildIndexHtml(uniqueBlogArticleLinks);
 
   console.log(`Sucessfully build index.html.`);
 
   console.log(`Tagging cards as published...`);
 
-  await tagCardsAsPublished(blogCardsToPublish);
+  // await tagCardsAsPublished(blogCardsToPublish);
 
   console.log(`Sucessfully tagged cards as published.`);
 };
