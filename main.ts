@@ -3,6 +3,7 @@ import {
   Card,
   getAllBlogCardsToPublish,
   getAllChildCards,
+  getAllPublishedBlogCards,
   tagCardsAsPublished,
 } from "./cards.ts";
 
@@ -81,12 +82,7 @@ const publishBlogArticles = async () => {
 
   const blogArticleLinks = [];
 
-  const sortedBlogCards = Object.values(blogCardsToPublish).sort((
-    cardA,
-    cardB,
-  ) => cardA.data.created_when > cardB.data.created_when ? -1 : 1);
-
-  for (const blogCardToPublish of sortedBlogCards) {
+  for (const blogCardToPublish of Object.values(blogCardsToPublish)) {
     const { id, name, created_when, modified_when } = blogCardToPublish.data;
 
     console.log(`Building article ${name} with id ${id}...`);
@@ -107,6 +103,19 @@ const publishBlogArticles = async () => {
 
     console.log(`Sucessfully build article ${name} with id ${id}.`);
   }
+
+  const alreadyPublishedCards = await getAllPublishedBlogCards();
+
+  for (const alreadyPublishedCard of Object.values(alreadyPublishedCards)) {
+    const { id, name, created_when, modified_when } = alreadyPublishedCard.data;
+    const articleUrl = `./articles/${id}.html`;
+    blogArticleLinks.push({ articleUrl, name, created_when, modified_when });
+  }
+
+  blogArticleLinks.sort((
+    cardA,
+    cardB,
+  ) => cardA.created_when > cardB.created_when ? -1 : 1);
 
   console.log(`Building index.html...`);
 

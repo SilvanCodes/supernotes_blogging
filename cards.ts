@@ -11,6 +11,7 @@ const SUPERNOTES_CARDS_UPDATE_URL = "https://api.supernotes.app/v1/cards/";
 const BLOG_ARTICLES_CARD_ID = "ea01500d-d244-44d8-9e85-ead7ecc53315";
 
 const TAG_TO_PUBLISH = "publish";
+const TAG_ONCE_PUBLISHED = "published";
 
 type Card = {
   data: {
@@ -80,6 +81,38 @@ const getAllBlogCardsToPublish = async (): Promise<CardCollection> => {
   return json;
 };
 
+const getAllPublishedBlogCards = async (): Promise<CardCollection> => {
+  const options = {
+    method: "POST",
+    headers: {
+      "Accept": "application/json",
+      "Api-Key": readEnv("SUPERNOTES_API_KEY"),
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      parent_card_id: BLOG_ARTICLES_CARD_ID,
+      filter_group: {
+        operator: "and",
+        filters: [
+          {
+            type: "tag",
+            operator: "contains",
+            arg: TAG_ONCE_PUBLISHED,
+          },
+        ],
+      },
+    }),
+  };
+
+  const res = await fetch(SUPERNOTES_CARDS_SELECT_URL, options);
+  //   console.log(res);
+
+  const json = await res.json();
+  //   console.log(json);
+
+  return json;
+};
+
 const getAllChildCards = async (id: string): Promise<CardCollection> => {
   const options = {
     method: "POST",
@@ -109,8 +142,10 @@ const tagCardsAsPublished = async (cards: CardCollection) => {
 };
 
 const tagCardAsPublished = async ({ data: { id, tags } }: Card) => {
-  tags = tags.filter((tag) => tag !== "publish");
-  tags.push("published");
+  tags = tags.filter((tag) =>
+    tag !== TAG_TO_PUBLISH && tag !== TAG_ONCE_PUBLISHED
+  );
+  tags.push(TAG_ONCE_PUBLISHED);
 
   const options = {
     method: "PUT",
@@ -143,6 +178,7 @@ export type { Card };
 export {
   getAllBlogCardsToPublish,
   getAllChildCards,
+  getAllPublishedBlogCards,
   getCardsByIds,
   tagCardAsPublished,
   tagCardsAsPublished,
