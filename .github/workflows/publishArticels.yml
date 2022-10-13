@@ -8,12 +8,14 @@ on:
 jobs:
   Publish-Articles:
     runs-on: ubuntu-latest
-    container:
-      image: denoland/deno:1.10.3
-      env:
-        SUPERNOTES_API_KEY: ${{ secrets.SUPERNOTES_API_KEY }}
+    env:
+      SUPERNOTES_API_KEY: ${{ secrets.SUPERNOTES_API_KEY }}
 
     steps:
+      - uses: denoland/setup-deno@v1
+        with:
+          deno-version: v1.10.3
+
       - uses: actions/checkout@v3
 
       - name: Delete index and articles
@@ -26,9 +28,6 @@ jobs:
 
       - name: Commit generated files
         run: |
-          sudo apt-get update
-          sudo apt-get install git-all
-          git version
           git config --global user.name "SilvanCodes"
           git config --global user.email "hello@silvan.codes"
           git commit -am "Update generated files"
