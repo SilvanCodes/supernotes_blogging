@@ -26,6 +26,9 @@ jobs:
 
       - name: Commit generated files
         run: |
+          sudo apt-get update
+          sudo apt-get install git-all
+          git version
           git config --global user.name "SilvanCodes"
           git config --global user.email "hello@silvan.codes"
           git commit -am "Update generated files"
