@@ -137,7 +137,7 @@ const publishBlogArticles = async () => {
 
   console.log(`Tagging cards as published...`);
 
-  // await tagCardsAsPublished(blogCardsToPublish);
+  await tagCardsAsPublished(blogCardsToPublish);
 
   console.log(`Sucessfully tagged cards as published.`);
 };
