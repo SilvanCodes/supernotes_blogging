@@ -19,6 +19,8 @@ type Card = {
     html: string;
     tags: string[];
     targeted_when: string;
+    created_when: string;
+    modified_when: string;
   };
 };
 

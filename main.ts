@@ -1,4 +1,4 @@
-import { articleSkeleton } from "./articles.ts";
+import { articleSkeleton, indexSkeleton } from "./articles.ts";
 import {
   Card,
   getAllBlogCardsToPublish,
@@ -27,13 +27,42 @@ const buildBlogArticleFromCard = async (
   }
 
   return `
+    <section>
     <h${level}>${name}</h${level}>
     ${html}
+    </section>
     ${childrenHtml.trim()}
   `;
 };
 
 // getAllChildCards("49f035c6-a518-40c1-acab-e5087f0c228f");
+
+const buildIndexHtml = async (
+  articleMeta: {
+    articleUrl: string;
+    name: string;
+    created_when: string;
+    modified_when: string;
+  }[],
+) => {
+  let indexEntries = "";
+
+  for (const { name, created_when, modified_when, articleUrl } of articleMeta) {
+    indexEntries += `
+    <section>
+      <a href=${articleUrl}>
+        <h2>${name}</h2>
+        <p>Created at: ${new Date(created_when).toDateString()}</p>
+        <p>Updated at: ${new Date(modified_when).toDateString()}</p>
+      </a>
+    </section>
+    `;
+  }
+
+  const indexHtml = indexSkeleton(indexEntries);
+
+  await Deno.writeTextFile("index.html", indexHtml);
+};
 
 const publishBlogArticles = async () => {
   const blogCardsToPublish = await getAllBlogCardsToPublish();
@@ -42,8 +71,10 @@ const publishBlogArticles = async () => {
 
   const blogArticles = [];
 
+  const blogArticleLinks = [];
+
   for (const blogCardToPublish of Object.values(blogCardsToPublish)) {
-    const { id, name } = blogCardToPublish.data;
+    const { id, name, created_when, modified_when } = blogCardToPublish.data;
 
     const articleHtml = await buildBlogArticleFromCard(blogCardToPublish);
 
@@ -53,8 +84,14 @@ const publishBlogArticles = async () => {
 
     blogArticles.push(article);
 
-    await Deno.writeTextFile(`./articles/${id}.html`, article);
+    const articleUrl = `./articles/${id}.html`;
+
+    blogArticleLinks.push({ articleUrl, name, created_when, modified_when });
+
+    await Deno.writeTextFile(articleUrl, article);
   }
+
+  await buildIndexHtml(blogArticleLinks);
 };
 
 // DO SOMETHING
