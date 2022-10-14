@@ -1,9 +1,8 @@
-
 <!DOCTYPE html>
 
 <html lang="en">
     <head>
-        <title>SilvanBlogs</title>
+        <title>SuperBlog: The ingredients</title>
 
     <meta charset="UTF-8" />
     <meta name="description" content="Read Silvan's blog" />
@@ -94,21 +93,28 @@
         <hr />
         <article class="elc-stack">
     <section>
-      <a href=./articles/749e77a7-4e3d-44a5-bbbc-6f65d894f77a.html>
-        <h2>SuperBlog: The ingredients</h2>
-        <p>Created at: Thu Oct 13 2022</p>
-        <p>Updated at: Fri Oct 14 2022</p>
-      </a>
+      <h1>SuperBlog: The ingredients</h1>
+<p>So, as you may have read, the source of this article is my Supernotes.  I decided to turn this experiment into a little series, where I discuss the technical implementation and explore its capabilities.</p>
+
+  </section>
+  <section><h2>Where does it come from?</h2>
+<p>Supernotes offers an API that I have build upon, yet it is to be considered in an alpha/beta stage.<br>
+The only official docs is swagger at <a href="https://api.supernotes.app/docs/swagger" class="external-link" target="_blank" rel="noreferrer noopener">https://api.supernotes.app/docs/swagger</a> which by far does not explain itself in detail and there are no guarantees regarding stability.</p>
+<p>I hopped into VSCode, generated a . devcontainer configuration for <a href="https://deno.land/" class="external-link" target="_blank" rel="noreferrer noopener">deno</a> and prototyped the API calls with Typescript. The API and especially the types (I love types!) of the JSON responses turned out sufficiently complete, enough for me to figure out how to read and write my cards and their metadata as needed.</p>
+
+  </section>
+  <section><h2>Where does it go?</h2>
+<p>We as individuals got pretty powerful platforms at our fingertips these days. GitHub is one of them. Having my card data available I blew some magic powder in the air and they turned into HTML. (The content is actually available as HTML right away and most of the code is just template strings to stitch that together. Also the index page is generated.)</p>
+<p>GitHub Actions to automate static file generation and GitHub Pages for static file hosting are the last two major components.</p>
+
+  </section>
+  <section><h2>Why are you telling me this?</h2>
+<p>I think I got a potentially clever idea that could benefit you as well. (Assuming you do or would want to use Supernotes.) And in any case, you and me, we might learn something. So listen:<br>
+The input for all that blog generation seems reasonably small to me. So small, in fact, I believe I can turn this thing into a GitHub Action itself. Right now I approximate the smallest possible input for that potential action as an token to access the API and one tag to find relevant cards. From there it depends how customizable the output needs to be to be satisfactory as an individual blog.</p>
+<p>Thank you for spending your time with me and stay tuned for more.</p>
+
     </section>
-    
-    <section>
-      <a href=./articles/49f035c6-a518-40c1-acab-e5087f0c228f.html>
-        <h2>Blogging from Supernotes</h2>
-        <p>Created at: Sun Oct 02 2022</p>
-        <p>Updated at: Thu Oct 13 2022</p>
-      </a>
-    </section>
-    </article>
+</article>
         <hr />
 
     <footer>
